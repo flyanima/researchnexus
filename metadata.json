@@ -1,0 +1,5 @@
+{
+  "name": "ResearchNexus",
+  "description": "A research outcome management platform organizing projects by theme and timeline, supporting HTML, PDF, and Markdown artifacts.",
+  "requestFramePermissions": []
+}
