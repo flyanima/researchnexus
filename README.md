@@ -71,6 +71,62 @@
 
    访问 http://localhost:3000
 
+## 🐳 Docker 部署
+
+### 快速开始（3 步）
+
+1. **配置环境变量**
+   ```bash
+   cp .env.example .env
+   # 编辑 .env 文件，填入 Supabase 凭证
+   nano .env
+   ```
+
+2. **启动应用**
+   ```bash
+   make up
+   ```
+
+3. **访问应用**
+   ```
+   http://localhost:3000
+   ```
+
+### 常用命令
+
+```bash
+# 开发环境
+make up              # 启动开发环境
+make down            # 停止容器
+make logs            # 查看日志
+make shell           # 进入容器
+make health          # 健康检查
+make stats           # 查看统计
+
+# 生产环境
+make prod-up         # 启动生产环境
+make prod-down       # 停止生产环境
+
+# 自动化脚本
+./scripts/deploy.sh dev              # 部署到开发环境
+./scripts/health-check.sh --full     # 完整健康检查
+./scripts/performance-test.sh --all  # 运行所有性能测试
+./scripts/backup-restore.sh backup   # 执行完整备份
+```
+
+### Docker 文档
+
+- [快速开始指南](./DOCKER_QUICK_START.md) - 5 分钟快速上手
+- [详细部署指南](./DOCKER_DEPLOYMENT.md) - 完整部署说明
+- [架构设计文档](./DOCKER_ARCHITECTURE.md) - 系统架构设计
+
+### 环境配置
+
+- `.env.example` - 环境变量示例
+- `.env.development` - 开发环境配置
+- `.env.staging` - 预发布环境配置
+- `.env.production` - 生产环境配置
+
 ## 📖 使用指南
 
 ### 创建项目

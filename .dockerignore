@@ -1,0 +1,60 @@
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Node
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+.env.local
+.env.*.local
+
+# Build outputs
+dist
+build
+.next
+out
+
+# Testing
+coverage
+.nyc_output
+*.lcov
+
+# Documentation
+README.md
+SUPABASE_SETUP.md
+docs
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.circleci
+
+# Docker
+Dockerfile
+docker-compose.yml
+.dockerignore
+
+# Development
+.env
+.env.development
+.env.test
+
+# Misc
+*.md
+LICENSE
+.editorconfig
+

@@ -1,0 +1,109 @@
+version: '3.8'
+
+services:
+  # ResearchNexus 前端应用
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # 构建时传入环境变量
+        VITE_SUPABASE_URL: ${VITE_SUPABASE_URL}
+        VITE_SUPABASE_ANON_KEY: ${VITE_SUPABASE_ANON_KEY}
+        GEMINI_API_KEY: ${GEMINI_API_KEY}
+    
+    container_name: researchnexus-app
+    
+    ports:
+      # 映射端口：主机端口:容器端口
+      - "${APP_PORT:-3000}:3000"
+    
+    environment:
+      # 运行时环境变量（可选，用于 serve 配置）
+      NODE_ENV: production
+    
+    # 重启策略
+    restart: unless-stopped
+    
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 512M
+        reservations:
+          cpus: '0.5'
+          memory: 256M
+    
+    # 日志配置
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+  # 可选：Nginx 反向代理（用于生产环境）
+  nginx:
+    image: nginx:alpine
+    container_name: researchnexus-nginx
+    
+    ports:
+      - "${NGINX_PORT:-80}:80"
+      - "${NGINX_HTTPS_PORT:-443}:443"
+    
+    volumes:
+      # 挂载 Nginx 配置
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      # 挂载 SSL 证书（如果需要）
+      - ./certs:/etc/nginx/certs:ro
+    
+    depends_on:
+      - app
+    
+    restart: unless-stopped
+    
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 256M
+        reservations:
+          cpus: '0.25'
+          memory: 128M
+    
+    # 日志配置
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+    
+    # 健康检查
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost/"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+      start_period: 5s
+
+# 网络配置
+networks:
+  default:
+    name: researchnexus-network
+    driver: bridge
+
+# 卷配置（如需持久化数据）
+volumes:
+  # 可选：用于存储日志或其他持久化数据
+  app-logs:
+    driver: local
+
