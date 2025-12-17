@@ -23,7 +23,7 @@ pnpm-lock.yaml
 .env.*.local
 
 # Build outputs
-dist
+# 注意：dist 文件夹需要包含在 Docker 构建中
 build
 .next
 out
