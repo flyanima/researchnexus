@@ -3,6 +3,7 @@ import { X, Trash2, Maximize2, Minimize2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import { Artifact, ArtifactType } from '../types';
 import ConfirmDialog from './ConfirmDialog';
+import PDFViewer from './PDFViewer';
 
 interface ArtifactViewerProps {
   artifact: Artifact;
@@ -121,11 +122,7 @@ const ArtifactViewer: React.FC<ArtifactViewerProps> = ({ artifact, onClose, onDe
                 )}
 
                 {artifact.type === ArtifactType.PDF && (
-                    <iframe 
-                        src={artifact.url} 
-                        title={artifact.title}
-                        className="w-full h-full border-none"
-                    />
+                    <PDFViewer url={artifact.url} title={artifact.title} />
                 )}
 
                 {artifact.type === ArtifactType.HTML && (

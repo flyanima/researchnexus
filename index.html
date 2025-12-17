@@ -2,7 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes" />
+    <!-- iOS specific meta tags for better scrolling support -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <title>ResearchNexus</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -68,6 +71,27 @@
         background: rgba(255, 255, 255, 0.7);
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
+      }
+
+      /* iOS Safari PDF iframe scrolling fix */
+      iframe {
+        -webkit-overflow-scrolling: touch;
+        overflow-scrolling: touch;
+      }
+
+      /* Prevent iOS zoom on input focus */
+      input, textarea, select {
+        font-size: 16px;
+      }
+
+      /* Fix for iOS Safari fixed positioning issues */
+      @supports (padding: max(0px)) {
+        body {
+          padding-left: max(0px, env(safe-area-inset-left));
+          padding-right: max(0px, env(safe-area-inset-right));
+          padding-top: max(0px, env(safe-area-inset-top));
+          padding-bottom: max(0px, env(safe-area-inset-bottom));
+        }
       }
     </style>
   <script type="importmap">
